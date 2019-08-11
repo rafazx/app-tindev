@@ -1,7 +1,8 @@
 const express = require( 'express' );
 const mongoose = require ( 'mongoose' );
 const cors = require( 'cors' );
-
+const port = require('../src/config/config').port;
+const MONGO_URL = require('../src/config/config').MONGO_URL;
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -14,9 +15,7 @@ io.on('connection' , socket => {
 });
 
 
-
-const dbUrl = 'mongodb+srv://tinderApp:1rSWE951PPFZXOvL@cluster0-verop.mongodb.net/Dev?retryWrites=true&w=majority';
-mongoose.connect(dbUrl, {
+mongoose.connect(MONGO_URL, {
     useNewUrlParser: true});
 
 app.use((req, res, next) => {
@@ -33,4 +32,4 @@ app.use(express.json());
 app.use('/api', routes);
 
 
-server.listen(3333);
+server.listen(port);
